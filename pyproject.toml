@@ -1,0 +1,18 @@
+[project]
+name = "ft-linear-regression"
+version = "0.1.0"
+description = "Linear regression implementation for 42"
+authors = [
+    {name = "Quéren Somarriba",email = "queren.somarriba@gmail.com"}
+]
+requires-python = ">=3.14"
+dependencies = [
+    "matplotlib (>=3.11.1,<4.0.0)",
+    "numpy (>=2.5.2,<3.0.0)",
+    "pandas (>=3.0.5,<4.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
