@@ -4,6 +4,7 @@ import os
 from linearRegression import LinearRegression
 # import matplotlib.pyplot as plt
 
+
 def load_data(file_path):
     """
     Read datas in file_path
@@ -13,8 +14,8 @@ def load_data(file_path):
     try:
         price_mileage = pd.read_csv(file_path, on_bad_lines='skip')
         return price_mileage
-    except:
-            print("Error in file")
+    except ValueError as e:
+        print(f"Error: {e}\n")
 
 
 def train_model():

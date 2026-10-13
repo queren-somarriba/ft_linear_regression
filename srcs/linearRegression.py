@@ -6,15 +6,19 @@ class LinearRegression:
     """
     Linear Regression Model with Gradient Descent
 
-    This class implements a linear regression model using gradient descent optimization for training.
-    It provides methods for model initialization, training, prediction, and model persistence.
+    This class implements a linear regression model using gradient descent
+    optimization for training.
+    It provides methods for model initialization, training, prediction,
+    and model persistence.
 
     Parameters:
         learning_rate (float): The learning rate used in gradient descent.
-        convergence_tol (float, optional): The tolerance for convergence (stopping criterion). Defaults to 1e-6.
+        convergence_tol (float, optional): The tolerance for convergence
+        (stopping criterion). Defaults to 1e-6.
 
     Attributes:
-        W (numpy.ndarray): Coefficients (weights) for the linear regression model.
+        W (numpy.ndarray): Coefficients (weights) for the linear regression
+        model.
         b (float): Intercept (bias) for the linear regression model.
 
     Examples:
@@ -85,23 +89,26 @@ class LinearRegression:
 
         self.X = (X_train - mean) / std
 
-    def fit(self, X, y, iterations): #, plot_cost=True):
+    def fit(self, X, y, iterations):  # , plot_cost=True):
         """
         Fit the linear regression mode t the training data.
 
         Parameters:
         X (numpy.ndarray): Training input data of shape(m,).
         y (numpy.ndarray): Training labels of shape (m,).
-        iterations (int): The number of iterations fot gradient descent.
-        plot_cost (bool, optional): Whether to plot the cost during training. Default to True.
+        iterations (int): The number of iterations for gradient descent.
+        plot_cost (bool, optional): Whether to plot the cost during training.
+        Default to True.
         Raises:
-        AssertionError: If input data and labels are not NumPy arrays or have mismatched shapes.
+        AssertionError: If input data and labels are not NumPy arrays or have
+        mismatched shapes.
 
         plots: Ploty line chart showing cost vs. iteration (if plot is True).
         """
         assert isinstance(X, np.ndarray), "X must be a NumPy array"
         assert isinstance(y, np.ndarray), "y must be a NumPy array"
-        assert X.shape[0] == y.shape[0], "X and y must have the same number of samples"
+        assert X.shape[0] == y.shape[0], "X and y must have the same number"
+        "of samples"
         assert iterations > 0, "Iterations must be greater than 0"
 
         self.y = y
@@ -126,7 +133,8 @@ class LinearRegression:
             # self.cost = cost
 
             # if plot_cost:
-            #     fig = px.line(y=costs, title="Cost vs Iteration", template="ploty_dark")
+            #     fig = px.line(y=costs, title="Cost vs Iteration",
+            #       template="ploty_dark")
             #     fig.update_layout(
             #         title_font_color="#41BEE9",
             #         xaxis=dict(color="#41BEE9", title="Iterations"),
