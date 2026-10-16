@@ -41,9 +41,9 @@ class LinearRegression:
         self.W = np.random.randn() * 0.01
         self.b = 0
 
-    def foward(self, X):
+    def forward(self, X):
         """
-        Compute the foward pass of the linear regression model.
+        Compute the forward pass of the linear regression model.
         X (numpy.array): Input data of shape(m,).
         returns: numpy.ndarray: Predictions of shape(m,).
         """
@@ -74,7 +74,7 @@ class LinearRegression:
         self.dW = np.dot(predictions - self.y, self.X) / m
         self.db = np.sum(predictions - self.y) / m
 
-    def standarditize_data(self, X_train):
+    def standardize_data(self, X_train):
         """
         Standardizes the input data using mean and standard deviation.
 
@@ -114,12 +114,12 @@ class LinearRegression:
         self.y = y
         self.mean = np.mean(X)
         self.std = np.std(X)
-        self.standarditize_data(X)
+        self.standardize_data(X)
         self.initialize_parameters()
         costs = []
 
         for i in range(iterations):
-            predictions = self.foward(self.X)
+            predictions = self.forward(self.X)
             cost = self.compute_cost(predictions)
             self.backward(predictions)
             self.W = self.W - self.learning_rate * self.dW
@@ -146,7 +146,7 @@ class LinearRegression:
         """
         Predict target values for new input data.
         """
-        return self.foward(X)
+        return self.forward(X)
 
     def denormalize_thetas(self):
 
