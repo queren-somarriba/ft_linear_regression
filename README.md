@@ -160,10 +160,10 @@ poetry run python precision.py
 ```
 
 ```
-theta0 = 8481.5000, theta1 = -0.021100
-MSE  : 586521.43
-RMSE : 765.85 (average error in price units)
-MAE  : 620.12
+theta0 = 8499.3739, theta1 = -0.021448
+MSE  : 445645.27
+RMSE : 667.57 (average error in price units)
+MAE  : 557.83
 R2   : 0.7330 (1.0 = perfect fit)
 ```
 
@@ -243,6 +243,8 @@ poetry run python plot.py
 | Red line | The regression line `y = theta0 + theta1 × x` |
 
 The line is drawn on the **raw** mileage using the denormalized thetas, exactly as `predict.py` would compute it.
+
+<img width="1792" height="1120" alt="plot" src="https://github.com/user-attachments/assets/Figure_1.png"
 
 ---
 
