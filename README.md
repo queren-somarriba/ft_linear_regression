@@ -223,6 +223,10 @@ with `dW` ↔ `∂J/∂θ1` and `db` ↔ `∂J/∂θ0`, and both parameters upda
 
 ## Visualization (`plot.py`)
 
+<p align="center">
+  <img src="assets/Figure_1.png" alt="Description de l'image" width="600">
+</p>
+
 `plot.py` is a bonus script that lets you check visually that the learned line fits the data.
 
 It:
@@ -243,7 +247,6 @@ poetry run python plot.py
 | Red line | The regression line `y = theta0 + theta1 × x` |
 
 The line is drawn on the **raw** mileage using the denormalized thetas, exactly as `predict.py` would compute it.
-![Plot](assets/Figure_1.png)
 ---
 
 ## Precision evaluation (`precision.py`)
