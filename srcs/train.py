@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import os
 from linearRegression import LinearRegression
-# import matplotlib.pyplot as plt
 
 
 def load_data(file_path):
@@ -19,23 +18,17 @@ def load_data(file_path):
 
 
 def train_model():
+    """
+    load the data from data.csv, train the model with all the data and save
+    thetas values to thetas.json
+    """
     data = load_data("data.csv")
     X = np.array(data['km'])
     y = np.array(data['price'])
     rate = 0.1  # test 0.05 -> 2
-    # costs = []
-    # rates = []
     model = LinearRegression(learning_rate=rate)
-    # while rate < 2.0:
     model.fit(X, y, iterations=100)
     model.save_thetas("thetas.json")
-    # costs.append(model.cost)
-    # rates.append(rate)
-    # rate += 0.01
-    # predictions = model.predict(X)
-    # print(predictions)
-    # plt.scatter(rates, costs)
-    # plt.show()
 
 
 if __name__ == "__main__":

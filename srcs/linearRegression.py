@@ -89,7 +89,7 @@ class LinearRegression:
 
         self.X = (X_train - mean) / std
 
-    def fit(self, X, y, iterations):  # , plot_cost=True):
+    def fit(self, X, y, iterations):
         """
         Fit the linear regression mode t the training data.
 
@@ -129,18 +129,6 @@ class LinearRegression:
             if i > 0 and abs(costs[-1] - costs[-2]) < self.convergence_tol:
                 print(f'Converged after {i} iterations.')
                 break
-
-            # self.cost = cost
-
-            # if plot_cost:
-            #     fig = px.line(y=costs, title="Cost vs Iteration",
-            #       template="ploty_dark")
-            #     fig.update_layout(
-            #         title_font_color="#41BEE9",
-            #         xaxis=dict(color="#41BEE9", title="Iterations"),
-            #         yaxis=dict(color="#41BEE9", title="Cost")
-            #     )
-            #     fig.show()
 
     def predict(self, X):
         """
