@@ -243,9 +243,7 @@ poetry run python plot.py
 | Red line | The regression line `y = theta0 + theta1 × x` |
 
 The line is drawn on the **raw** mileage using the denormalized thetas, exactly as `predict.py` would compute it.
-
-<img width="1792" height="1120" alt="plot" src="https://github.com/user-attachments/assets/Figure_1.png"
-
+![Plot](assets/Figure_1.png)
 ---
 
 ## Precision evaluation (`precision.py`)
