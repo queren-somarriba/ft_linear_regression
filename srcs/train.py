@@ -11,7 +11,7 @@ def load_data(file_path):
     if not os.path.exists(file_path):
         raise ValueError("Error: no file found\n")
     try:
-        price_mileage = pd.read_csv(file_path, on_bad_lines='skip')
+        price_mileage = pd.read_csv(file_path, on_bad_lines='error')
         return price_mileage
     except ValueError as e:
         print(f"Error: {e}\n")
@@ -25,7 +25,9 @@ def train_model():
     data = load_data("data.csv")
     X = np.array(data['km'])
     y = np.array(data['price'])
-    rate = 0.1  # test 0.05 -> 2
+    if np.isnan(X).any() or np.isnan(y).any():
+        raise ValueError("Invalid data: Nan")
+    rate = 0.05
     model = LinearRegression(learning_rate=rate)
     model.fit(X, y, iterations=100)
     model.save_thetas("thetas.json")

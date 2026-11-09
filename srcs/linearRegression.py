@@ -109,6 +109,7 @@ class LinearRegression:
         assert isinstance(y, np.ndarray), "y must be a NumPy array"
         assert X.shape[0] == y.shape[0], "X and y must have the same number"
         "of samples"
+        assert X.shape[0] > 1, "There should be more samples"
         assert iterations > 0, "Iterations must be greater than 0"
 
         self.y = y
