@@ -29,7 +29,8 @@ def train_model():
         raise ValueError("Invalid data: Nan")
     rate = 0.05
     model = LinearRegression(learning_rate=rate)
-    model.fit(X, y, iterations=100)
+    model.fit(X, y, iterations=1000)
+    model.denormalize_thetas()
     model.save_thetas("thetas.json")
 
 
