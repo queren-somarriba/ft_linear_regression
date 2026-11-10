@@ -136,7 +136,6 @@ ZeroDivError in self.X = (X_train - mean) / std.")
         return self.forward(X)
 
     def denormalize_thetas(self):
-
         self.W = self.W / self.std
         self.b = self.b - self.W * self.mean
 

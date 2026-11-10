@@ -1,5 +1,6 @@
 import json
 import os
+import numpy as np
 
 
 def get_thetas() -> tuple[float, float]:
@@ -30,6 +31,9 @@ def get_mileage() -> float:
             mileage = float(input("What the mileage of your car?\n>"))
             if mileage < 0:
                 print("Error: mileage cannot be negative.")
+                continue
+            if np.isnan(mileage) or np.isinf(mileage):
+                print("Error: mileage must be a finite value")
                 continue
             return mileage
         except ValueError:
