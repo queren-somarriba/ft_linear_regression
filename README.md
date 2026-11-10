@@ -56,12 +56,12 @@ price = theta0 + theta1 × mileage
 
 ## Requirements
 
-- Python **3.10+** (the code uses the `tuple[float, float]` annotation syntax, available from 3.9)
+- Python **3.14** (the code uses the `tuple[float, float]` annotation syntax, available from 3.9)
 - [Poetry](https://python-poetry.org/) for dependency and virtual environment management
 - Dependencies (managed by Poetry):
   - [NumPy](https://numpy.org/)
   - [pandas](https://pandas.pydata.org/)
-  - [matplotlib](https://matplotlib.org/) — only needed by `plot.py`
+  - [matplotlib](https://matplotlib.org/)
 
 > `plot.py` and `precision.py` import `get_thetas` from `predict.py` and `load_data` from `train.py`, so they must be run from the same directory as these files (and from the directory containing `data.csv` and `thetas.json`).
 
@@ -81,8 +81,6 @@ poetry --version
 Other methods (official installer, etc.) are described in the [Poetry documentation](https://python-poetry.org/docs/#installation).
 
 ### 2. Install the project dependencies
-
-If `pyproject.toml` and `poetry.lock` are already in the repository, a single command is enough:
 
 ```bash
 poetry install
@@ -108,8 +106,6 @@ km,price
 - `km`: car mileage (explanatory variable, `X`)
 - `price`: car price (target variable, `y`)
 
-Malformed lines are skipped (`on_bad_lines='skip'`).
-
 ---
 
 ## Usage
@@ -119,36 +115,35 @@ All commands are run through Poetry so that they use the project's virtual envir
 ### 1. Train the model
 
 ```bash
-poetry run python train.py
+poetry run python srcs/train.py
 ```
 
 The script:
 1. reads `data.csv`;
 2. standardizes the mileage;
-3. runs gradient descent (with early stopping: a `Converged after N iterations.` message is printed if the convergence criterion is met);
+3. runs gradient descent (with early stopping: a `Converged after 1000 iterations.` message is printed if the convergence criterion is met);
 4. converts the parameters back to the original scale;
 5. writes `thetas.json`.
 
 ### 2. Predict a price
 
 ```bash
-poetry run python predict.py
+poetry run python srcs/predict.py
 ```
 
 ```
 What the mileage of your car?
 >100000
-The estimate price of your car is: 5934.12
+The estimate price of your car is: 6354.70
 ```
 
-*(Example output; the actual value depends on your dataset.)*
 
 > ⚠️ If `thetas.json` does not exist (model not trained yet), `predict.py` falls back to `theta0 = 0` and `theta1 = 0`, so the predicted price is `0.00`. This is the behaviour required by the subject.
 
 ### 3. Plot the data and the regression line (bonus)
 
 ```bash
-poetry run python plot.py
+poetry run python srcs/plot.py
 ```
 
 Opens a matplotlib window showing the dataset and the learned line. See [Visualization](#visualization-plotpy).
@@ -156,14 +151,14 @@ Opens a matplotlib window showing the dataset and the learned line. See [Visuali
 ### 4. Evaluate the precision of the model (bonus)
 
 ```bash
-poetry run python precision.py
+poetry run python srcs/precision.py
 ```
 
 ```
-theta0 = 8499.3739, theta1 = -0.021448
-MSE  : 445645.27
+theta0 = 8499.5945 theta1 = -0.021449
+MSE  : 445645.25
 RMSE : 667.57 (average error in price units)
-MAE  : 557.83
+MAE  : 557.84
 R2   : 0.7330 (1.0 = perfect fit)
 ```
 
@@ -173,10 +168,10 @@ R2   : 0.7330 (1.0 = perfect fit)
 
 ```bash
 eval $(poetry env activate)
-python train.py
-python predict.py
-python plot.py
-python precision.py
+python srcs/train.py
+python srcs/predict.py
+python srcs/plot.py
+python srcs/precision.py
 ```
 
 > Recommended order: `train.py` first (it generates `thetas.json`), then any of the other scripts. Without `thetas.json`, `plot.py` and `precision.py` use `theta0 = 0` and `theta1 = 0`, so the line is flat at 0 and the metrics are meaningless.
@@ -287,8 +282,8 @@ Defined in `train.py`:
 
 | Parameter | Default | Description |
 |---|---|---|
-| `rate` (`learning_rate`) | `0.1` | Learning rate α. Too large → divergence; too small → slow convergence. |
-| `iterations` | `100` | Maximum number of gradient descent iterations. |
+| `rate` (`learning_rate`) | `0.05` | Learning rate α. Too large → divergence; too small → slow convergence. |
+| `iterations` | `1000` | Maximum number of gradient descent iterations. |
 | `convergence_tol` | `1e-6` | Early-stopping threshold on the cost variation (constructor argument). |
 
 Using the class directly:
@@ -300,8 +295,8 @@ from linearRegression import LinearRegression
 X = np.array([240000, 139800, 150500, 185530])
 y = np.array([3650, 3800, 4400, 4450])
 
-model = LinearRegression(learning_rate=0.1, convergence_tol=1e-6)
-model.fit(X, y, iterations=100)
+model = LinearRegression(learning_rate=0.05, convergence_tol=1e-6)
+model.fit(X, y, iterations=1000)
 model.save_thetas("thetas.json")
 ```
 
@@ -319,10 +314,8 @@ print(metrics["R2"])
 ## `thetas.json` format
 
 ```json
-{"theta1": -0.0211, "theta0": 8481.5}
+{"theta1": -0.021449, "theta0": 8499.5945}
 ```
-
-*(Example values.)*
 
 - `theta0`: estimated price at 0 km
 - `theta1`: price change per kilometre (usually negative)
@@ -334,8 +327,8 @@ This file is read by `predict.py`, `plot.py` and `precision.py`.
 ## Error handling
 
 - **Missing `data.csv`**: `load_data` raises a `ValueError` (`Error: no file found`).
-- **Malformed CSV lines**: skipped (`on_bad_lines='skip'`).
-- **Missing, empty or corrupted `thetas.json`**: `get_thetas` falls back to `theta0 = 0` and `theta1 = 0` (with a warning if the values are invalid).
+- **Malformed CSV lines**: raise an Error (`on_bad_lines='error'`).
+- **Missing, empty or corrupted `thetas.json`**: `get_thetas` falls back to `theta0 = 0` and `theta1 = 0`.
 - **Invalid mileage** (not a number, or negative): `predict.py` prints an error and asks again.
 
 ---
