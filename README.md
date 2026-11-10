@@ -83,7 +83,7 @@ Other methods (official installer, etc.) are described in the [Poetry documentat
 ### 2. Install the project dependencies
 
 ```bash
-poetry install
+poetry install --no-root
 ```
 
 This creates an isolated virtual environment and installs the exact locked versions of all dependencies.
