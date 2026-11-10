@@ -86,10 +86,13 @@ class LinearRegression:
         """
         mean = np.mean(X_train, axis=0)
         std = np.std(X_train, axis=0)
+        if std == 0:
+            raise ZeroDivisionError("Error: std == 0 will produce a \
+ZeroDivError in self.X = (X_train - mean) / std.")
         try:
             self.X = (X_train - mean) / std
         except ZeroDivisionError as e:
-            print(f"Error: {e}")
+            print(f"Error: {e}\n")
 
     def fit(self, X, y, iterations):
         """
