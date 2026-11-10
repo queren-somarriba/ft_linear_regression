@@ -86,29 +86,24 @@ class LinearRegression:
         """
         mean = np.mean(X_train, axis=0)
         std = np.std(X_train, axis=0)
-
-        self.X = (X_train - mean) / std
+        try:
+            self.X = (X_train - mean) / std
+        except ZeroDivisionError as e:
+            print(f"Error: {e}")
 
     def fit(self, X, y, iterations):
         """
-        Fit the linear regression mode t the training data.
+        Fit the linear regression model to the training data.
 
         Parameters:
         X (numpy.ndarray): Training input data of shape(m,).
         y (numpy.ndarray): Training labels of shape (m,).
         iterations (int): The number of iterations for gradient descent.
-        plot_cost (bool, optional): Whether to plot the cost during training.
-        Default to True.
-        Raises:
-        AssertionError: If input data and labels are not NumPy arrays or have
-        mismatched shapes.
-
-        plots: Ploty line chart showing cost vs. iteration (if plot is True).
         """
         assert isinstance(X, np.ndarray), "X must be a NumPy array"
         assert isinstance(y, np.ndarray), "y must be a NumPy array"
-        assert X.shape[0] == y.shape[0], "X and y must have the same number"
-        "of samples"
+        assert X.shape[0] == y.shape[0], "X and y must have the same number \
+        of samples"
         assert X.shape[0] > 1, "There should be more samples"
         assert iterations > 0, "Iterations must be greater than 0"
 
@@ -146,8 +141,6 @@ class LinearRegression:
         """
         Save the trained model to thetas.json.
         """
-        self.denormalize_thetas()
-
         model_data = {
             'theta1': self.W,
             'theta0': self.b
